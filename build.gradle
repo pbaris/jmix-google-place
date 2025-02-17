@@ -8,7 +8,6 @@ buildscript {
 }
 
 group = 'gr.netmechanics.jmix'
-version = '0.0.1-SNAPSHOT'
 
 subprojects {
     apply plugin: 'java-library'
@@ -16,6 +15,7 @@ subprojects {
     apply plugin: 'io.jmix'
 
     repositories {
+        mavenLocal()
         mavenCentral()
         maven {
             url 'https://global.repo.jmix.io/repository/public'

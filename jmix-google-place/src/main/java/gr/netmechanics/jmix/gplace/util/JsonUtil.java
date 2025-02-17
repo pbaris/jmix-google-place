@@ -1,24 +1,18 @@
-package gr.netmechanics.jmix.gplace.data;
+package gr.netmechanics.jmix.gplace.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import gr.netmechanics.jmix.gplace.data.GooglePlace;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Panos Bariamis (pbaris)
  */
-@Getter
-@Setter
-@EqualsAndHashCode(of = "placeId")
-public class GooglePlaceRef {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class JsonUtil {
 
-    private String placeId;
-
-    private String displayName;
-
-    public static String toJson(final GooglePlaceRef gpr) {
+    public static String toJson(final GooglePlace gpr) {
         try {
             return new ObjectMapper().writeValueAsString(gpr);
 
@@ -27,9 +21,9 @@ public class GooglePlaceRef {
         }
     }
 
-    public static GooglePlaceRef fromJson(final String json) {
+    public static GooglePlace fromJson(final String json) {
         try {
-            return  new ObjectMapper().readValue(json, GooglePlaceRef.class);
+            return  new ObjectMapper().readValue(json, GooglePlace.class);
 
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Cannot convert from Json", e);
