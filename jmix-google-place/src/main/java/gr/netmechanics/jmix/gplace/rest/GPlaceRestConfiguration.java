@@ -16,6 +16,7 @@ public class GPlaceRestConfiguration {
     public GPlaceRestClient googlePlaceRestClient() {
         RestClient client = RestClient.builder()
             .baseUrl("https://places.googleapis.com")
+            .requestInterceptor(new LogRequestInterceptor())
             .build();
 
         return HttpServiceProxyFactory.builderFor(RestClientAdapter.create(client))

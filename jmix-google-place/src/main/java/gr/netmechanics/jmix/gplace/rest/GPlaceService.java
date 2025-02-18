@@ -65,8 +65,10 @@ public class GPlaceService {
             return null;
         }
 
+        var actualLanguageCode = StringUtils.defaultIfBlank(languageCode, props.getLanguageCode());
+
         try {
-            return restClient.placeDetails(placeId, languageCode, Map.of(
+            return restClient.placeDetails(placeId, actualLanguageCode, Map.of(
                 "X-Goog-Api-Key", actualApiKey,
                 "X-Goog-FieldMask", fields));
 
