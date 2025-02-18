@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import gr.netmechanics.jmix.gplace.data.GooglePlace;
 import lombok.Getter;
 
 /**
@@ -15,5 +14,5 @@ import lombok.Getter;
 public class TextSearchResult {
 
     @JsonProperty("places")
-    private List<GooglePlace> places;
+    private List<Place> places;
 }

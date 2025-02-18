@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns="http://schemas.netmechanics.gr/jmix/ui"
+		   attributeFormDefault="unqualified"
+		   elementFormDefault="qualified"
+		   targetNamespace="http://schemas.netmechanics.gr/jmix/ui"
+		   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   xmlns:layout="http://jmix.io/schema/flowui/layout">
+
+	<xs:element name="googlePlacePicker">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="layout:validatableBaseFieldComponent">
+					<xs:sequence minOccurs="0">
+						<xs:element name="tooltip" type="layout:tooltipElement"/>
+						<xs:element name="prefix" type="layout:prefixOrSuffixComponent"/>
+					</xs:sequence>
+
+					<xs:attribute name="autofocus" type="xs:boolean"/>
+					<xs:attribute name="themeNames" type="layout:comboBoxThemeNames"/>
+					<xs:attribute name="clearButtonVisible" type="xs:boolean"/>
+					<xs:attribute name="apiKey" type="xs:string"/>
+
+					<xs:attributeGroup ref="layout:hasTitle"/>
+					<xs:attributeGroup ref="layout:hasRequired"/>
+					<xs:attributeGroup ref="layout:hasFocusableAttributes"/>
+					<xs:attributeGroup ref="layout:hasPlaceholder"/>
+					<xs:attributeGroup ref="layout:hasOverlayClass"/>
+					<xs:attributeGroup ref="layout:hasOverlayWidth"/>
+					<xs:attributeGroup ref="layout:hasAriaLabel"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

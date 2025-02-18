@@ -1,6 +1,5 @@
 package gr.netmechanics.jmix.gplace.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.netmechanics.jmix.gplace.data.GooglePlace;
 import lombok.AccessLevel;
@@ -16,8 +15,8 @@ public class JsonUtil {
         try {
             return new ObjectMapper().writeValueAsString(gpr);
 
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("Cannot convert to Json", e);
+        } catch (Exception e) {
+            return null;
         }
     }
 
@@ -25,8 +24,8 @@ public class JsonUtil {
         try {
             return  new ObjectMapper().readValue(json, GooglePlace.class);
 
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("Cannot convert from Json", e);
+        } catch (Exception e) {
+            return null;
         }
     }
 }
