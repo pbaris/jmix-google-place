@@ -7,6 +7,7 @@ import io.jmix.eclipselink.EclipselinkConfiguration;
 import io.jmix.flowui.FlowuiConfiguration;
 import io.jmix.flowui.sys.registration.ComponentRegistration;
 import io.jmix.flowui.sys.registration.ComponentRegistrationBuilder;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -27,4 +28,9 @@ public class GPlaceConfiguration {
             .build();
     }
 
+    @Bean
+    @ConditionalOnMissingBean(GPlacePropertiesProvider.class)
+    public GPlacePropertiesProvider gplacePropertiesProvider(final GPlaceProperties properties) {
+        return new GPlacePropertiesDefaultProvider(properties);
+    }
 }

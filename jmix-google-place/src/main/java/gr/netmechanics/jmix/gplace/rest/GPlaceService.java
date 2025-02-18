@@ -66,7 +66,7 @@ public class GPlaceService {
         }
 
         try {
-            return restClient.placeDetails(actualApiKey, languageCode, Map.of(
+            return restClient.placeDetails(placeId, languageCode, Map.of(
                 "X-Goog-Api-Key", actualApiKey,
                 "X-Goog-FieldMask", fields));
 
