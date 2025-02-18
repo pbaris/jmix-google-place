@@ -18,6 +18,7 @@ import org.springframework.lang.NonNull;
 @RequiredArgsConstructor
 class GooglePlaceFetchCallback implements SupportsItemsFetchCallback.FetchCallback<GooglePlace, String> {
     private final GPlaceService gpService;
+    private final String languageCode;
     private final String apiKey;
 
     private String searchTerm;
@@ -30,7 +31,7 @@ class GooglePlaceFetchCallback implements SupportsItemsFetchCallback.FetchCallba
 
         if (StringUtils.isNotBlank(queryTerm) && !queryTerm.equalsIgnoreCase(searchTerm)) {
             searchTerm = queryTerm;
-            searchResults = gpService.searchPlaces(searchTerm, query.getLimit(), apiKey);
+            searchResults = gpService.searchPlaces(searchTerm, languageCode, query.getLimit(), apiKey);
         }
 
         return searchResults.stream()

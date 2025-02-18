@@ -13,13 +13,14 @@ import lombok.Setter;
 public class GooglePlacePicker extends JmixComboBox<GooglePlace> {
 
     private String apiKey;
+    private String languageCode;
 
     @Override
     protected void initComponent() {
         super.initComponent();
         GPlaceService gpService = applicationContext.getBean(GPlaceService.class);
 
-        setItemsFetchCallback(new GooglePlaceFetchCallback(gpService, apiKey));
+        setItemsFetchCallback(new GooglePlaceFetchCallback(gpService, languageCode, apiKey));
         setItemLabelGenerator(GooglePlace::toString);
         setRenderer(LitRenderer.<GooglePlace>of("""
                 <span style="font-weight: bold;">${item.name}</span> <small style="font-size:0.9em;color:#565477">${item.address}</small>

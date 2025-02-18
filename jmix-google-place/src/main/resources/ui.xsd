@@ -20,6 +20,7 @@
 					<xs:attribute name="themeNames" type="layout:comboBoxThemeNames"/>
 					<xs:attribute name="clearButtonVisible" type="xs:boolean"/>
 					<xs:attribute name="apiKey" type="xs:string"/>
+					<xs:attribute name="languageCode" type="xs:string"/>
 
 					<xs:attributeGroup ref="layout:hasTitle"/>
 					<xs:attributeGroup ref="layout:hasRequired"/>

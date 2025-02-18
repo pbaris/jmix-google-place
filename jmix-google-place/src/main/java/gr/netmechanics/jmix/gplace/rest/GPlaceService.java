@@ -3,7 +3,6 @@ package gr.netmechanics.jmix.gplace.rest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import gr.netmechanics.jmix.gplace.GPlacePropertiesProvider;
 import gr.netmechanics.jmix.gplace.data.GooglePlace;
@@ -25,25 +24,54 @@ public class GPlaceService {
     private final GPlacePropertiesProvider props;
     private final GPlaceRestClient restClient;
 
-    public List<GooglePlace> searchPlaces(final String term, final Integer pageSize, final String apiKey) throws IllegalStateException {
+    public List<GooglePlace> searchPlaces(final String term, final String languageCode, final Integer pageSize, final String apiKey) {
         var actualApiKey = StringUtils.defaultIfBlank(apiKey, props.getApiKey());
 
         if (StringUtils.isBlank(term) || StringUtils.isBlank(actualApiKey)) {
             return Collections.emptyList();
         }
 
-        var result = restClient.searchPlace(new TextSearchRequest(term, pageSize, props.getLanguageCode()), Map.of(
-            "Content-Type", "application/json",
-            "X-Goog-Api-Key", actualApiKey,
-            "X-Goog-FieldMask", "places.id,places.displayName,places.formattedAddress"
-        ));
+        var actualLanguageCode = StringUtils.defaultIfBlank(languageCode, props.getLanguageCode());
 
-        if (result == null) {
+        try {
+            var result = restClient.searchPlace(new TextSearchRequest(term, pageSize, actualLanguageCode), Map.of(
+                "Content-Type", "application/json",
+                "X-Goog-Api-Key", actualApiKey,
+                "X-Goog-FieldMask", "places.id,places.displayName,places.formattedAddress"));
+
+            return result.getPlaces().stream()
+                .map(Place::toGooglePlace)
+                .toList();
+
+        } catch (Exception e) {
             return Collections.emptyList();
         }
+    }
 
-        return Optional.ofNullable(result.getPlaces())
-            .map(places -> places.stream().map(Place::toGooglePlace).toList())
-            .orElseGet(Collections::emptyList);
+    public String getPlaceRatings(final String placeId, final String languageCode, final String apiKey) {
+        return fetchPlaceDetails(placeId, languageCode, apiKey,
+            "id,displayName,rating,googleMapsUri,reviews,userRatingCount");
+    }
+
+    public String getPlaceInfo(final String placeId, final String languageCode, final String apiKey) {
+        return fetchPlaceDetails(placeId, languageCode, apiKey,
+            "id,displayName,formattedAddress,internationalPhoneNumber,location,googleMapsUri,regularOpeningHours");
+    }
+
+    private String fetchPlaceDetails(final String placeId, final String languageCode, final String apiKey, final String fields) {
+        var actualApiKey = StringUtils.defaultIfBlank(apiKey, props.getApiKey());
+
+        if (StringUtils.isBlank(placeId) || StringUtils.isBlank(actualApiKey)) {
+            return null;
+        }
+
+        try {
+            return restClient.placeDetails(actualApiKey, languageCode, Map.of(
+                "X-Goog-Api-Key", actualApiKey,
+                "X-Goog-FieldMask", fields));
+
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
