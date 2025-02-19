@@ -37,7 +37,7 @@ public record Review(
         it.setRating(rating);
         it.setPublishTimeRelative(relativePublishTimeDescription);
         it.setAuthorName(authorAttribution.displayName());
-        it.setMapsUri(googleMapsUri);
+        it.setMapUrl(googleMapsUri);
         return it;
     }
 }

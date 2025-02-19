@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://jmix.io/schema/flowui/fragment">
+	<data readOnly="true">
+		<instance id="infoDc" class="gr.netmechanics.jmix.gplace.data.GooglePlaceInfoRef"/>
+	</data>
+	<content>
+		<vbox id="root" classNames="gpif" >
+			<anchor dataContainer="infoDc" href="mapUrl" target="BLANK">
+				<hbox width="100%" alignItems="CENTER" expand="gpifName">
+					<image resource="icons/glogo.svg"/>
+					<h2 id="gpifName" dataContainer="infoDc" property="displayName"/>
+				</hbox>
+			</anchor>
+
+			<formLayout dataContainer="infoDc" labelsPosition="ASIDE">
+				<responsiveSteps>
+					<responsiveStep minWidth="0" columns="1"/>
+				</responsiveSteps>
+
+				<formItem label="msg://gr.netmechanics.jmix.gplace.data/GooglePlaceInfoRef.address">
+					<div property="address"/>
+				</formItem>
+				<formItem label="msg://gr.netmechanics.jmix.gplace.data/GooglePlaceInfoRef.phoneNumber">
+					<div property="phoneNumber"/>
+				</formItem>
+				<formItem label="msg://gr.netmechanics.jmix.gplace.data/GooglePlaceInfoRef.openingHours">
+					<div id="gpifOpeningHours"/>
+				</formItem>
+				<formItem>
+					<button icon="vaadin:external-link" themeNames="small" text="msg://gr.netmechanics.jmix.gplace.data/GooglePlaceInfoRef.viewMap"/>
+				</formItem>
+			</formLayout>
+		</vbox>
+	</content>
+</fragment>

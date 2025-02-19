@@ -66,7 +66,7 @@ public record Place(
         it.setDisplayName(displayName.text());
         it.setRating(rating);
         it.setRatingCount(userRatingCount);
-        it.setMapsUri(googleMapsUri);
+        it.setMapUrl(googleMapsUri);
 
         Optional.ofNullable(reviews).ifPresentOrElse(
             list -> it.setReviews(list.stream().map(Review::toGooglePlaceReviewRef).toList()),
@@ -82,7 +82,7 @@ public record Place(
         it.setDisplayName(displayName.text());
         it.setAddress(formattedAddress);
         it.setPhoneNumber(internationalPhoneNumber);
-        it.setMapsUri(googleMapsUri);
+        it.setMapUrl(googleMapsUri);
 
         Optional.ofNullable(location).ifPresent(latLng -> {
             it.setLatitude(latLng.latitude());
