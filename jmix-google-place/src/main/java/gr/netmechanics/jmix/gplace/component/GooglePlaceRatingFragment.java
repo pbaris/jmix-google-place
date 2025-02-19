@@ -30,6 +30,7 @@ public class GooglePlaceRatingFragment extends Fragment<VerticalLayout> {
 
     @Subscribe(target = Target.HOST_CONTROLLER)
     public void onHostBeforeShow(final View.BeforeShowEvent event) {
-        String placeRatings = googlePlaceService.getPlaceRatings(placeId, languageCode, apiKey);
+        var placeRatings = googlePlaceService.getPlaceRating(placeId, languageCode, apiKey);
+        System.out.println(placeRatings);
     }
 }

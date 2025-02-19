@@ -1,10 +1,12 @@
 package gr.netmechanics.jmix.gplace.rest;
 
 import static gr.netmechanics.jmix.gplace.GPlaceConstants.KEY_CACHE_G_PLACE_INFO;
+import static gr.netmechanics.jmix.gplace.GPlaceConstants.KEY_CACHE_G_PLACE_INFO_RAW;
 import static gr.netmechanics.jmix.gplace.GPlaceConstants.KEY_CACHE_G_PLACE_RATING;
 
 import java.util.Map;
 
+import gr.netmechanics.jmix.gplace.rest.dto.Place;
 import gr.netmechanics.jmix.gplace.rest.dto.TextSearchRequest;
 import gr.netmechanics.jmix.gplace.rest.dto.TextSearchResult;
 import org.springframework.cache.annotation.Cacheable;
@@ -25,9 +27,15 @@ public interface GPlaceRestClient {
     TextSearchResult searchPlace(@RequestBody final TextSearchRequest textSearchRequest,
                                  @RequestHeader final Map<String, String> headers);
 
+    @Cacheable(KEY_CACHE_G_PLACE_INFO_RAW)
+    @GetExchange("/v1/places/{placeId}")
+    String placeDetailsRaw(@PathVariable("placeId") final String placeId,
+                           @RequestParam(name = "languageCode") final String languageCode,
+                           @RequestHeader final Map<String, String> headers);
+
     @Cacheable(KEY_CACHE_G_PLACE_INFO)
     @GetExchange("/v1/places/{placeId}")
-    String placeDetails(@PathVariable("placeId") final String placeId,
-                        @RequestParam(name = "languageCode") final String languageCode,
-                        @RequestHeader final Map<String, String> headers);
+    Place placeDetails(@PathVariable("placeId") final String placeId,
+                       @RequestParam(name = "languageCode") final String languageCode,
+                       @RequestHeader final Map<String, String> headers);
 }

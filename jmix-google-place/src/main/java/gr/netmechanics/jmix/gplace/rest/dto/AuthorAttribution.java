@@ -2,17 +2,19 @@ package gr.netmechanics.jmix.gplace.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author Panos Bariamis (pbaris)
  */
-@Getter
-@Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DisplayName {
+public record AuthorAttribution(
+    @JsonProperty("displayName")
+    String displayName,
 
-    @JsonProperty("text")
-    private String text;
+    @JsonProperty("uri")
+    String uri,
+
+    @JsonProperty("photoUri")
+    String photoUri) {
+
 }

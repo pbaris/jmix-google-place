@@ -12,14 +12,14 @@ import org.springframework.lang.NonNull;
 /**
  * @author Panos Bariamis (pbaris)
  */
-@DatatypeDef(id = "googlePlace", javaClass = GooglePlace.class, defaultForClass = true)
+@DatatypeDef(id = "googlePlace", javaClass = GooglePlaceRef.class, defaultForClass = true)
 @Ddl("CLOB")
-public class GooglePlaceDatatype implements Datatype<GooglePlace> {
+public class GooglePlaceRefDatatype implements Datatype<GooglePlaceRef> {
 
     @NonNull
     @Override
     public String format(final Object value) {
-        if (value instanceof GooglePlace gpr) {
+        if (value instanceof GooglePlaceRef gpr) {
             return JsonUtil.toJson(gpr);
         }
 
@@ -33,12 +33,12 @@ public class GooglePlaceDatatype implements Datatype<GooglePlace> {
     }
 
     @Override
-    public GooglePlace parse(final String value) throws ParseException {
+    public GooglePlaceRef parse(final String value) throws ParseException {
         return JsonUtil.fromJson(value);
     }
 
     @Override
-    public GooglePlace parse(final String value, @NonNull final Locale locale) throws ParseException {
+    public GooglePlaceRef parse(final String value, @NonNull final Locale locale) throws ParseException {
         return parse(value);
     }
 }

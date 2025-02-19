@@ -8,15 +8,15 @@ import jakarta.persistence.Converter;
  * @author Panos Bariamis (pbaris)
  */
 @Converter(autoApply = true)
-public class GooglePlaceConverter implements AttributeConverter<GooglePlace, String> {
+public class GooglePlaceRefConverter implements AttributeConverter<GooglePlaceRef, String> {
 
     @Override
-    public String convertToDatabaseColumn(final GooglePlace gpr) {
+    public String convertToDatabaseColumn(final GooglePlaceRef gpr) {
         return gpr != null ? JsonUtil.toJson(gpr) : null;
     }
 
     @Override
-    public GooglePlace convertToEntityAttribute(final String dbData) {
+    public GooglePlaceRef convertToEntityAttribute(final String dbData) {
         return dbData != null ? JsonUtil.fromJson(dbData) : null;
     }
 }

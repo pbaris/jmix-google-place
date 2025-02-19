@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import com.vaadin.flow.data.provider.Query;
-import gr.netmechanics.jmix.gplace.data.GooglePlace;
+import gr.netmechanics.jmix.gplace.data.GooglePlaceRef;
 import gr.netmechanics.jmix.gplace.rest.GPlaceService;
 import io.jmix.flowui.component.SupportsItemsFetchCallback;
 import lombok.RequiredArgsConstructor;
@@ -16,17 +16,17 @@ import org.springframework.lang.NonNull;
  * @author Panos Bariamis (pbaris)
  */
 @RequiredArgsConstructor
-class GooglePlaceFetchCallback implements SupportsItemsFetchCallback.FetchCallback<GooglePlace, String> {
+class GooglePlacePickerFetchCallback implements SupportsItemsFetchCallback.FetchCallback<GooglePlaceRef, String> {
     private final GPlaceService gpService;
     private final String languageCode;
     private final String apiKey;
 
     private String searchTerm;
-    private List<GooglePlace> searchResults = Collections.emptyList();
+    private List<GooglePlaceRef> searchResults = Collections.emptyList();
 
     @NonNull
     @Override
-    public Stream<GooglePlace> fetch(final Query<GooglePlace, String> query) {
+    public Stream<GooglePlaceRef> fetch(final Query<GooglePlaceRef, String> query) {
         var queryTerm = query.getFilter().orElse(null);
 
         if (StringUtils.isNotBlank(queryTerm) && !queryTerm.equalsIgnoreCase(searchTerm)) {

@@ -1,33 +1,94 @@
 package gr.netmechanics.jmix.gplace.rest.dto;
 
-import java.io.Serializable;
+import java.util.List;
+import java.util.Optional;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import gr.netmechanics.jmix.gplace.data.GooglePlace;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import gr.netmechanics.jmix.gplace.data.GooglePlaceInfoRef;
+import gr.netmechanics.jmix.gplace.data.GooglePlaceRatingRef;
+import gr.netmechanics.jmix.gplace.data.GooglePlaceRef;
 
 /**
  * @author Panos Bariamis (pbaris)
  */
-@Getter
-@EqualsAndHashCode(of = "id")
-public class Place implements Serializable {
-
+@JsonIgnoreProperties(ignoreUnknown = true)
+public record Place(
     @JsonProperty("id")
-    private String id;
+    String id,
 
     @JsonProperty("displayName")
-    private DisplayName displayName;
+
+    LocalizedText displayName,
 
     @JsonProperty("formattedAddress")
-    private String formattedAddress;
+    String formattedAddress,
 
-    public GooglePlace toGooglePlace() {
-        GooglePlace gp = new GooglePlace();
-        gp.setId(id);
-        gp.setDisplayName(displayName.getText());
-        gp.setAddress(formattedAddress);
-        return gp;
+    @JsonProperty("location")
+    LatLng location,
+
+    @JsonProperty("rating")
+    Double rating,
+
+    @JsonProperty("userRatingCount")
+    Integer userRatingCount,
+
+    @JsonProperty("googleMapsUri")
+    String googleMapsUri,
+
+    @JsonProperty("internationalPhoneNumber")
+    String internationalPhoneNumber,
+
+    @JsonProperty("regularOpeningHours")
+    OpeningHours regularOpeningHours,
+
+    @JsonProperty("reviews")
+    List<Review> reviews) {
+
+    public GooglePlaceRef toGooglePlaceRef() {
+        GooglePlaceRef it = new GooglePlaceRef();
+        it.setId(id);
+        it.setDisplayName(displayName.text());
+        it.setAddress(formattedAddress);
+
+        Optional.ofNullable(location).ifPresent(latLng -> {
+            it.setLatitude(latLng.latitude());
+            it.setLongitude(latLng.longitude());
+        });
+
+        return it;
+    }
+
+    public GooglePlaceRatingRef toGooglePlaceRatingRef() {
+        GooglePlaceRatingRef it = new GooglePlaceRatingRef();
+        it.setId(id);
+        it.setDisplayName(displayName.text());
+        it.setRating(rating);
+        it.setRatingCount(userRatingCount);
+        it.setMapsUri(googleMapsUri);
+
+        Optional.ofNullable(reviews).ifPresent(list ->
+            it.setReviews(list.stream().map(Review::toGooglePlaceReviewRef).toList()));
+
+        return it;
+    }
+
+    public GooglePlaceInfoRef toGooglePlaceInfoRef() {
+        GooglePlaceInfoRef it = new GooglePlaceInfoRef();
+        it.setId(id);
+        it.setDisplayName(displayName.text());
+        it.setAddress(formattedAddress);
+        it.setPhoneNumber(internationalPhoneNumber);
+        it.setMapsUri(googleMapsUri);
+
+        Optional.ofNullable(location).ifPresent(latLng -> {
+            it.setLatitude(latLng.latitude());
+            it.setLongitude(latLng.longitude());
+        });
+
+        Optional.ofNullable(regularOpeningHours).ifPresent(openingHours ->
+            it.setOpeningHours(openingHours.weekdayDescriptions()));
+
+        return it;
     }
 }
