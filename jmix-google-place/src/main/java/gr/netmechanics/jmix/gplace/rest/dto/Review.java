@@ -35,7 +35,7 @@ public record Review(
         it.setName(name);
         it.setText(text.text());
         it.setRating(rating);
-        it.setPublishTimeText(relativePublishTimeDescription);
+        it.setPublishTimeRelative(relativePublishTimeDescription);
         it.setAuthorName(authorAttribution.displayName());
         it.setMapsUri(googleMapsUri);
         return it;

@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <fragment xmlns="http://jmix.io/schema/flowui/fragment">
+	<data readOnly="true">
+		<instance id="ratingDc" class="gr.netmechanics.jmix.gplace.data.GooglePlaceRatingRef"/>
+	</data>
 	<content>
-		<vbox>
-			<span text="lala"/>
+		<vbox classNames="gprf">
+			<anchor dataContainer="ratingDc" href="mapsUri" target="BLANK">
+				<hbox width="100%" alignItems="CENTER" expand="gprfRow1">
+					<image resource="icons/glogo.svg"/>
+					<vbox id="gprfRow1">
+						<h2 dataContainer="ratingDc" property="displayName"/>
+						<hbox alignItems="CENTER">
+							<div dataContainer="ratingDc" property="rating" classNames="gprf-rating"/>
+							<div id="gprfRatingStars" classNames="gprf-rating-stars"/>
+						</hbox>
+					</vbox>
+				</hbox>
+			</anchor>
+			<virtualList id="gprfReviews">
+				<fragmentRenderer class="gr.netmechanics.jmix.gplace.component.GooglePlaceReviewFragment"/>
+			</virtualList>
 		</vbox>
 	</content>
 </fragment>

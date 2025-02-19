@@ -1,5 +1,6 @@
 package gr.netmechanics.jmix.gplace.data;
 
+import io.jmix.core.metamodel.annotation.JmixEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@JmixEntity
 @EqualsAndHashCode(of = "name")
 public class GooglePlaceReviewRef {
 
@@ -16,7 +18,7 @@ public class GooglePlaceReviewRef {
 
     private String text;
 
-    private String publishTimeText;
+    private String publishTimeRelative;
 
     private Double rating;
 

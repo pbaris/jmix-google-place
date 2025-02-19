@@ -1,5 +1,6 @@
 package gr.netmechanics.jmix.gplace.rest.dto;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,8 +68,10 @@ public record Place(
         it.setRatingCount(userRatingCount);
         it.setMapsUri(googleMapsUri);
 
-        Optional.ofNullable(reviews).ifPresent(list ->
-            it.setReviews(list.stream().map(Review::toGooglePlaceReviewRef).toList()));
+        Optional.ofNullable(reviews).ifPresentOrElse(
+            list -> it.setReviews(list.stream().map(Review::toGooglePlaceReviewRef).toList()),
+//            list -> it.setReviews(Collections.emptyList()), //TODO remove this
+            () -> it.setReviews(Collections.emptyList()));
 
         return it;
     }
@@ -86,8 +89,9 @@ public record Place(
             it.setLongitude(latLng.longitude());
         });
 
-        Optional.ofNullable(regularOpeningHours).ifPresent(openingHours ->
-            it.setOpeningHours(openingHours.weekdayDescriptions()));
+        Optional.ofNullable(regularOpeningHours).ifPresentOrElse(
+            oh -> it.setOpeningHours(oh.weekdayDescriptions()),
+            () -> it.setOpeningHours(Collections.emptyList()));
 
         return it;
     }

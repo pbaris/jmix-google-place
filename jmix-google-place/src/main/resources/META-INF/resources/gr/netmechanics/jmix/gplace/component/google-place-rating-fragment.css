@@ -1,0 +1,33 @@
+.gprf {
+	border-top: 5px solid #4FCE6A; border-radius: 5px;
+	background-color: #FFFFFF;
+}
+
+.gprf-rating { font-size: 1.5em; color: #E7711B; }
+.gprf-rating.small { font-size: 1em; }
+
+.gprf-rating-stars { display: flex; gap: 5px; }
+
+.gprf-star { width: 15px; height: 15px; background-size: cover; }
+.gprf-rating-stars.small .gprf-star { width: 12px; height: 12px; }
+
+.gprf-star.empty { background-image: url("../../../../../icons/star_empty.svg"); }
+.gprf-star.filled { background-image: url("../../../../../icons/star_filled.svg"); }
+
+.gprf-star.half { position: relative; }
+.gprf-star.half::before {
+	content: "";
+	position: absolute;
+	width: 50%;
+	height: 100%;
+	background-image: url("../../../../../icons/star_filled.svg");
+	background-size: cover;
+}
+
+.gprf-review {
+	border-top: 2px solid #E7711B; border-radius: 5px;
+	margin-bottom: 10px;
+}
+
+.gprf-review .author { font-weight: bold; }
+.gprf-review .time { font-size: 0.9em; color: #999999; }
