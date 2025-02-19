@@ -11,7 +11,7 @@
 					<vbox id="gprfRow1">
 						<h2 dataContainer="ratingDc" property="displayName"/>
 						<hbox alignItems="CENTER">
-							<div dataContainer="ratingDc" property="rating" classNames="gprf-rating"/>
+							<div id="gprfRating" classNames="gprf-rating"/>
 							<div id="gprfRatingStars" classNames="gprf-rating-stars"/>
 						</hbox>
 					</vbox>

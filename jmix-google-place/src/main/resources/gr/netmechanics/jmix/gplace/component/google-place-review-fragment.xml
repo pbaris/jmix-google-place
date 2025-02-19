@@ -11,7 +11,7 @@
 			</hbox>
 
 			<hbox alignItems="CENTER">
-				<div dataContainer="reviewDc" property="rating" classNames="gprf-rating small"/>
+				<div id="gprfReviewRating" classNames="gprf-rating small"/>
 				<div id="gprfReviewRatingStars" classNames="gprf-rating-stars small"/>
 			</hbox>
 			<p dataContainer="reviewDc" property="text"/>

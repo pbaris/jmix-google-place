@@ -18,6 +18,7 @@ import org.springframework.lang.NonNull;
 @FragmentDescriptor("google-place-review-fragment.xml")
 public class GooglePlaceReviewFragment extends FragmentRenderer<VerticalLayout, GooglePlaceReviewRef> {
 
+    @ViewComponent private Div gprfReviewRating;
     @ViewComponent private Div gprfReviewRatingStars;
 
     private boolean rendered;
@@ -27,6 +28,7 @@ public class GooglePlaceReviewFragment extends FragmentRenderer<VerticalLayout, 
         super.setItem(item);
 
         if (!rendered) {
+            gprfReviewRating.setText("%.1f".formatted(item.getRating()));
             renderStars(gprfReviewRatingStars, item.getRating());
             rendered = true;
         }

@@ -34,6 +34,7 @@ public class GooglePlaceRatingFragment extends Fragment<VerticalLayout> {
     @Setter private String languageCode;
     @Setter private boolean hideReviews;
 
+    @ViewComponent private Div gprfRating;
     @ViewComponent private Div gprfRatingStars;
     @ViewComponent private JmixVirtualList<GooglePlaceReviewRef> gprfReviews;
     @ViewComponent private InstanceContainer<GooglePlaceRatingRef> ratingDc;
@@ -50,6 +51,7 @@ public class GooglePlaceRatingFragment extends Fragment<VerticalLayout> {
 
         if (ref != null) {
             ratingDc.setItem(ref);
+            gprfRating.setText("%.1f".formatted(ref.getRating()));
             renderStars(gprfRatingStars, ref.getRating());
             renderReviews(ref.getReviews());
             rendered = true;
