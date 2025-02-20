@@ -1,5 +1,8 @@
 package gr.netmechanics.jmix.gplace.component;
 
+import static gr.netmechanics.jmix.gplace.util.FragmentRenderUtil.renderIcon;
+import static gr.netmechanics.jmix.gplace.util.FragmentRenderUtil.renderStars;
+
 import java.util.List;
 
 import com.vaadin.flow.component.dependency.StyleSheet;
@@ -8,6 +11,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import gr.netmechanics.jmix.gplace.data.GooglePlaceRatingRef;
 import gr.netmechanics.jmix.gplace.data.GooglePlaceReviewRef;
 import gr.netmechanics.jmix.gplace.rest.GPlaceService;
+import io.jmix.flowui.component.image.JmixImage;
 import io.jmix.flowui.component.virtuallist.JmixVirtualList;
 import io.jmix.flowui.fragment.Fragment;
 import io.jmix.flowui.fragment.FragmentDescriptor;
@@ -33,9 +37,11 @@ public class GooglePlaceRatingFragment extends Fragment<VerticalLayout> {
     @Setter private String apiKey;
     @Setter private String languageCode;
     @Setter private boolean hideReviews;
+    @Setter private boolean useDefaultIcon;
 
     @ViewComponent private Div gprfRating;
     @ViewComponent private Div gprfRatingStars;
+    @ViewComponent private JmixImage<Object> gprfIcon;
     @ViewComponent private JmixVirtualList<GooglePlaceReviewRef> gprfReviews;
     @ViewComponent private InstanceContainer<GooglePlaceRatingRef> ratingDc;
 
@@ -52,6 +58,11 @@ public class GooglePlaceRatingFragment extends Fragment<VerticalLayout> {
         if (ref != null) {
             ratingDc.setItem(ref);
             gprfRating.setText("%.1f".formatted(ref.getRating()));
+
+            if (!useDefaultIcon) {
+                renderIcon(gprfIcon, ref);
+            }
+
             renderStars(gprfRatingStars, ref.getRating());
             renderReviews(ref.getReviews());
             rendered = true;
@@ -67,23 +78,6 @@ public class GooglePlaceRatingFragment extends Fragment<VerticalLayout> {
 
         } else {
             gprfReviews.setItems(reviews);
-        }
-    }
-
-    static void renderStars(final Div container, double rating) {
-        for (int i = 1; i <= 5; i++) {
-            Div star = new Div();
-            star.addClassNames("gprf-star", "empty");
-
-            if (rating >= i) {
-                star.removeClassName("empty");
-                star.addClassName("filled");
-
-            } else if (rating >= i - 0.5) {
-                star.addClassName("half");
-            }
-
-            container.add(star);
         }
     }
 }

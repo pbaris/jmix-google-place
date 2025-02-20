@@ -7,7 +7,7 @@
 		<vbox id="root" classNames="gprf">
 			<anchor dataContainer="ratingDc" href="mapUrl" target="BLANK">
 				<hbox width="100%" alignItems="CENTER" expand="gprfRow1">
-					<image resource="icons/glogo.svg"/>
+					<image id="gprfIcon" resource="icons/glogo.svg" width="44px" height="44px"/>
 					<vbox id="gprfRow1">
 						<h2 dataContainer="ratingDc" property="displayName"/>
 						<hbox alignItems="CENTER">

@@ -1,12 +1,19 @@
 package gr.netmechanics.jmix.gplace.component;
 
+import static gr.netmechanics.jmix.gplace.util.FragmentRenderUtil.renderIcon;
+
+import java.util.Optional;
+
+import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.html.IFrame;
 import gr.netmechanics.jmix.gplace.data.GooglePlaceInfoRef;
 import gr.netmechanics.jmix.gplace.rest.GPlaceService;
+import io.jmix.flowui.component.image.JmixImage;
 import io.jmix.flowui.fragment.Fragment;
 import io.jmix.flowui.fragment.FragmentDescriptor;
+import io.jmix.flowui.kit.component.button.JmixButton;
 import io.jmix.flowui.model.InstanceContainer;
 import io.jmix.flowui.view.Subscribe;
 import io.jmix.flowui.view.Target;
@@ -20,7 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @StyleSheet("gr/netmechanics/jmix/gplace/component/google-place-info-fragment.css")
 @FragmentDescriptor("google-place-info-fragment.xml")
-public class GooglePlaceInfoFragment extends Fragment<VerticalLayout> {
+public class GooglePlaceInfoFragment extends Fragment<Div> {
 
     @Autowired
     private GPlaceService googlePlaceService;
@@ -28,11 +35,19 @@ public class GooglePlaceInfoFragment extends Fragment<VerticalLayout> {
     @Setter private String placeId;
     @Setter private String apiKey;
     @Setter private String languageCode;
+    @Setter private boolean hideMap;
+    @Setter private boolean useDefaultIcon;
+    @Setter private int zoom = 14;
+    @Setter private String mapType = "roadmap";
 
+    @ViewComponent private IFrame gpifMap;
     @ViewComponent private Div gpifOpeningHours;
+    @ViewComponent private JmixButton gpifViewMap;
+    @ViewComponent private JmixImage<Object> gpifIcon;
     @ViewComponent private InstanceContainer<GooglePlaceInfoRef> infoDc;
 
     private boolean rendered;
+    private String mapUrl;
 
     @Subscribe(target = Target.HOST_CONTROLLER)
     public void onHostBeforeShow(final View.BeforeShowEvent event) {
@@ -44,12 +59,43 @@ public class GooglePlaceInfoFragment extends Fragment<VerticalLayout> {
 
         if (ref != null) {
             infoDc.setItem(ref);
+
+            // render Opening Hours
             ref.getOpeningHours().forEach(oh -> gpifOpeningHours.add(new Div(oh)));
 
+            // render View on Map button
+            Optional.ofNullable(ref.getMapUrl())
+                .ifPresentOrElse(url -> mapUrl = url, () -> gpifViewMap.setVisible(false));
+
+            if (!useDefaultIcon) {
+                renderIcon(gpifIcon, ref);
+            }
+            
+            renderMap(ref);
             rendered = true;
 
         } else {
             setVisible(false);
         }
+    }
+
+    private void renderMap(final GooglePlaceInfoRef ref) {
+        if (hideMap) {
+            gpifMap.setVisible(false);
+            return;
+        }
+
+        gpifMap.setSrc("https://www.google.com/maps/embed/v1/place?key=%s&q=place_id:%s&language=%s&zoom=%d&maptype=%s"
+            .formatted(ref.getApiKey(), ref.getId(), ref.getLanguageCode(), zoom, mapType));
+
+        gpifMap.getElement()
+            .setAttribute("referrerpolicy", "no-referrer-when-downgrade")
+            .setAttribute("allowfullscreen", true)
+            .setAttribute("frameborder", "0");
+    }
+
+    @Subscribe(id = "gpifViewMap", subject = "clickListener")
+    public void onGpifViewMapClick(final ClickEvent<JmixButton> event) {
+        event.getSource().getUI().ifPresent(ui -> ui.getPage().open(mapUrl, "_blank"));
     }
 }

@@ -1,6 +1,6 @@
 package gr.netmechanics.jmix.gplace.component;
 
-import static gr.netmechanics.jmix.gplace.component.GooglePlaceRatingFragment.renderStars;
+import static gr.netmechanics.jmix.gplace.util.FragmentRenderUtil.renderStars;
 
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;

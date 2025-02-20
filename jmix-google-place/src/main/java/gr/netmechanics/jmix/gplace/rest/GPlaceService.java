@@ -10,6 +10,7 @@ import gr.netmechanics.jmix.gplace.data.GooglePlaceRatingRef;
 import gr.netmechanics.jmix.gplace.data.GooglePlaceRef;
 import gr.netmechanics.jmix.gplace.rest.dto.Place;
 import gr.netmechanics.jmix.gplace.rest.dto.TextSearchRequest;
+import gr.netmechanics.jmix.gplace.util.PlaceMapper;
 import io.jmix.core.entity.annotation.SystemLevel;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -22,6 +23,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service("gplace_GPlaceService")
 public class GPlaceService {
+
+    private static final String FIELDS_BASE = "id,displayName,googleMapsUri,iconBackgroundColor,iconMaskBaseUri";
+    private static final String FIELDS_RATING = FIELDS_BASE + ",rating,reviews,userRatingCount";
+    private static final String FIELDS_INFO = FIELDS_BASE + ",formattedAddress,internationalPhoneNumber,location,regularOpeningHours";
 
     private final GPlacePropertiesProvider props;
     private final GPlaceRestClient restClient;
@@ -42,7 +47,7 @@ public class GPlaceService {
                 "X-Goog-FieldMask", "places.id,places.displayName,places.formattedAddress,places.location"));
 
             return result.places().stream()
-                .map(Place::toGooglePlaceRef)
+                .map(PlaceMapper::toGooglePlaceRef)
                 .toList();
 
         } catch (Exception e) {
@@ -51,37 +56,46 @@ public class GPlaceService {
     }
 
     public String getPlaceRatingRaw(final String placeId, final String languageCode, final String apiKey) {
-        return fetchPlaceDetails(true, placeId, languageCode, apiKey,
-            "id,displayName,rating,googleMapsUri,reviews,userRatingCount");
+        DetailsResult<String> result = fetchPlaceDetails(true, placeId, languageCode, apiKey, FIELDS_RATING);
+        return result.place();
     }
 
     public GooglePlaceRatingRef getPlaceRating(final String placeId, final String languageCode, final String apiKey) {
-        Place place = fetchPlaceDetails(false, placeId, languageCode, apiKey,
-            "id,displayName,rating,googleMapsUri,reviews,userRatingCount");
+        DetailsResult<Place> result = fetchPlaceDetails(false, placeId, languageCode, apiKey, FIELDS_RATING);
 
-        return place != null ? place.toGooglePlaceRatingRef() : null;
+        Place place = result.place();
+        if (place == null) {
+            return null;
+        }
+
+        return PlaceMapper.toGooglePlaceRatingRef(place, result.apiKey(), result.languageCode());
     }
 
     public String getPlaceInfoRaw(final String placeId, final String languageCode, final String apiKey) {
-        return fetchPlaceDetails(true, placeId, languageCode, apiKey,
-            "id,displayName,formattedAddress,internationalPhoneNumber,location,googleMapsUri,regularOpeningHours");
+        DetailsResult<String> result = fetchPlaceDetails(true, placeId, languageCode, apiKey, FIELDS_INFO);
+        return result.place();
     }
 
     public GooglePlaceInfoRef getPlaceInfo(final String placeId, final String languageCode, final String apiKey) {
-        Place place = fetchPlaceDetails(false, placeId, languageCode, apiKey,
-            "id,displayName,formattedAddress,internationalPhoneNumber,location,googleMapsUri,regularOpeningHours");
+        DetailsResult<Place> result = fetchPlaceDetails(false, placeId, languageCode, apiKey, FIELDS_INFO);
 
-        return place != null ? place.toGooglePlaceInfoRef() : null;
+        Place place = result.place();
+        if (place == null) {
+            return null;
+        }
+
+        return PlaceMapper.toGooglePlaceInfoRef(place, result.apiKey(), result.languageCode());
     }
 
     @SuppressWarnings("unchecked")
-    private <T> T fetchPlaceDetails(final boolean useRaw, final String placeId, final String languageCode,
-                                     final String apiKey, final String fields) {
+    private <T> DetailsResult<T> fetchPlaceDetails(final boolean useRaw, final String placeId, final String languageCode,
+                                                   final String apiKey, final String fields) {
 
+        var emptyResult = new DetailsResult<T>(null, null, null);
         var actualApiKey = StringUtils.defaultIfBlank(apiKey, props.getApiKey());
 
         if (StringUtils.isBlank(placeId) || StringUtils.isBlank(actualApiKey)) {
-            return null;
+            return emptyResult;
         }
 
         var actualLanguageCode = StringUtils.defaultIfBlank(languageCode, props.getLanguageCode());
@@ -89,11 +103,14 @@ public class GPlaceService {
 
         try {
             return useRaw
-                ? (T) restClient.placeDetailsRaw(placeId, actualLanguageCode, headers)
-                : (T) restClient.placeDetails(placeId, actualLanguageCode, headers);
+                ? new DetailsResult<>(actualApiKey, actualLanguageCode, (T) restClient.placeDetailsRaw(placeId, actualLanguageCode, headers))
+                : new DetailsResult<>(actualApiKey, actualLanguageCode, (T) restClient.placeDetails(placeId, actualLanguageCode, headers));
 
         } catch (Exception e) {
-            return null;
+            return emptyResult;
         }
+    }
+
+    private record DetailsResult<T>(String apiKey, String languageCode, T place) {
     }
 }

@@ -4,32 +4,39 @@
 		<instance id="infoDc" class="gr.netmechanics.jmix.gplace.data.GooglePlaceInfoRef"/>
 	</data>
 	<content>
-		<vbox id="root" classNames="gpif" >
-			<anchor dataContainer="infoDc" href="mapUrl" target="BLANK">
-				<hbox width="100%" alignItems="CENTER" expand="gpifName">
-					<image resource="icons/glogo.svg"/>
-					<h2 id="gpifName" dataContainer="infoDc" property="displayName"/>
-				</hbox>
-			</anchor>
+		<div id="root" classNames="gpif">
+			<vbox spacing="false">
+				<anchor dataContainer="infoDc" href="mapUrl" target="BLANK">
+					<hbox width="100%" alignItems="CENTER" expand="gpifName">
+						<image id="gpifIcon" resource="icons/glogo.svg" width="44px" height="44px"/>
+						<h2 id="gpifName" dataContainer="infoDc" property="displayName"/>
+					</hbox>
+				</anchor>
 
-			<formLayout dataContainer="infoDc" labelsPosition="ASIDE">
-				<responsiveSteps>
-					<responsiveStep minWidth="0" columns="1"/>
-				</responsiveSteps>
+				<formLayout dataContainer="infoDc" labelsPosition="ASIDE">
+					<responsiveSteps>
+						<responsiveStep minWidth="0" columns="1"/>
+					</responsiveSteps>
 
-				<formItem label="msg://gr.netmechanics.jmix.gplace.data/GooglePlaceInfoRef.address">
-					<div property="address"/>
-				</formItem>
-				<formItem label="msg://gr.netmechanics.jmix.gplace.data/GooglePlaceInfoRef.phoneNumber">
-					<div property="phoneNumber"/>
-				</formItem>
-				<formItem label="msg://gr.netmechanics.jmix.gplace.data/GooglePlaceInfoRef.openingHours">
-					<div id="gpifOpeningHours"/>
-				</formItem>
-				<formItem>
-					<button icon="vaadin:external-link" themeNames="small" text="msg://gr.netmechanics.jmix.gplace.data/GooglePlaceInfoRef.viewMap"/>
-				</formItem>
-			</formLayout>
-		</vbox>
+					<formItem label="msg://gr.netmechanics.jmix.gplace.data/GooglePlaceInfoRef.address">
+						<div property="address"/>
+					</formItem>
+					<formItem label="msg://gr.netmechanics.jmix.gplace.data/GooglePlaceInfoRef.phoneNumber">
+						<div property="phoneNumber"/>
+					</formItem>
+					<formItem label="msg://gr.netmechanics.jmix.gplace.data/GooglePlaceInfoRef.openingHours">
+						<div id="gpifOpeningHours"/>
+					</formItem>
+				</formLayout>
+
+				<button id="gpifViewMap"
+						text="msg://gr.netmechanics.jmix.gplace.data/GooglePlaceInfoRef.viewMap"
+						icon="vaadin:external-link" themeNames="small"/>
+			</vbox>
+
+			<vbox alignItems="CENTER">
+				<iframe id="gpifMap" width="100%" height="100%" css="border:0"/>
+			</vbox>
+		</div>
 	</content>
 </fragment>
