@@ -8,6 +8,7 @@ import gr.netmechanics.jmix.gplace.GPlacePropertiesProvider;
 import gr.netmechanics.jmix.gplace.data.GooglePlaceInfoRef;
 import gr.netmechanics.jmix.gplace.data.GooglePlaceRatingRef;
 import gr.netmechanics.jmix.gplace.data.GooglePlaceRef;
+import gr.netmechanics.jmix.gplace.rest.dto.DetailsResult;
 import gr.netmechanics.jmix.gplace.rest.dto.Place;
 import gr.netmechanics.jmix.gplace.rest.dto.TextSearchRequest;
 import gr.netmechanics.jmix.gplace.util.PlaceMapper;
@@ -55,9 +56,8 @@ public class GPlaceService {
         }
     }
 
-    public String getPlaceRatingRaw(final String placeId, final String languageCode, final String apiKey) {
-        DetailsResult<String> result = fetchPlaceDetails(true, placeId, languageCode, apiKey, FIELDS_RATING);
-        return result.place();
+    public DetailsResult<String> getPlaceRatingRaw(final String placeId, final String languageCode, final String apiKey) {
+        return fetchPlaceDetails(true, placeId, languageCode, apiKey, FIELDS_RATING);
     }
 
     public GooglePlaceRatingRef getPlaceRating(final String placeId, final String languageCode, final String apiKey) {
@@ -71,9 +71,8 @@ public class GPlaceService {
         return PlaceMapper.toGooglePlaceRatingRef(place, result.apiKey(), result.languageCode());
     }
 
-    public String getPlaceInfoRaw(final String placeId, final String languageCode, final String apiKey) {
-        DetailsResult<String> result = fetchPlaceDetails(true, placeId, languageCode, apiKey, FIELDS_INFO);
-        return result.place();
+    public DetailsResult<String> getPlaceInfoRaw(final String placeId, final String languageCode, final String apiKey) {
+        return fetchPlaceDetails(true, placeId, languageCode, apiKey, FIELDS_INFO);
     }
 
     public GooglePlaceInfoRef getPlaceInfo(final String placeId, final String languageCode, final String apiKey) {
@@ -109,8 +108,5 @@ public class GPlaceService {
         } catch (Exception e) {
             return emptyResult;
         }
-    }
-
-    private record DetailsResult<T>(String apiKey, String languageCode, T place) {
     }
 }
