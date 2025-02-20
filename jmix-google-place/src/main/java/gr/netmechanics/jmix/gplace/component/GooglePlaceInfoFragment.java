@@ -36,6 +36,7 @@ public class GooglePlaceInfoFragment extends Fragment<Div> {
     @Setter private String apiKey;
     @Setter private String languageCode;
     @Setter private boolean hideMap;
+    @Setter private boolean hideOpeningHours;
     @Setter private boolean useDefaultIcon;
     @Setter private int zoom = 14;
     @Setter private String mapType = "roadmap";
@@ -61,7 +62,12 @@ public class GooglePlaceInfoFragment extends Fragment<Div> {
             infoDc.setItem(ref);
 
             // render Opening Hours
-            ref.getOpeningHours().forEach(oh -> gpifOpeningHours.add(new Div(oh)));
+            if (hideOpeningHours) {
+                gpifOpeningHours.setVisible(false);
+
+            } else {
+                ref.getOpeningHours().forEach(oh -> gpifOpeningHours.add(new Div(oh)));
+            }
 
             // render View on Map button
             Optional.ofNullable(ref.getMapUrl())
@@ -70,7 +76,7 @@ public class GooglePlaceInfoFragment extends Fragment<Div> {
             if (!useDefaultIcon) {
                 renderIcon(gpifIcon, ref);
             }
-            
+
             renderMap(ref);
             rendered = true;
 
