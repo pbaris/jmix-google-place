@@ -90,7 +90,7 @@ public class GPlaceService {
     private <T> DetailsResult<T> fetchPlaceDetails(final boolean useRaw, final String placeId, final String languageCode,
                                                    final String apiKey, final String fields) {
 
-        var emptyResult = new DetailsResult<T>(null, null, null);
+        var emptyResult = new DetailsResult<T>(null, null, null, null);
         var actualApiKey = StringUtils.defaultIfBlank(apiKey, props.getApiKey());
 
         if (StringUtils.isBlank(placeId) || StringUtils.isBlank(actualApiKey)) {
@@ -102,8 +102,8 @@ public class GPlaceService {
 
         try {
             return useRaw
-                ? new DetailsResult<>(actualApiKey, actualLanguageCode, (T) restClient.placeDetailsRaw(placeId, actualLanguageCode, headers))
-                : new DetailsResult<>(actualApiKey, actualLanguageCode, (T) restClient.placeDetails(placeId, actualLanguageCode, headers));
+                ? new DetailsResult<>(actualApiKey, actualLanguageCode, placeId, (T) restClient.placeDetailsRaw(placeId, actualLanguageCode, headers))
+                : new DetailsResult<>(actualApiKey, actualLanguageCode, placeId, (T) restClient.placeDetails(placeId, actualLanguageCode, headers));
 
         } catch (Exception e) {
             return emptyResult;
