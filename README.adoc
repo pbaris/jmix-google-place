@@ -31,9 +31,20 @@ implementation 'gr.netmechanics.jmix:jmix-google-place-starter:<addon-version>'
 
 == Configuration
 
-apikey with map embeded and places api
-apikey
-languagecode
+The add-on uses the https://developers.google.com/maps/documentation/places/web-service/op-overview[Google Places API (New),window=_blank] and the https://developers.google.com/maps/documentation/embed/embedding-map[Maps Embed API,window=_blank] (optional). Both APIs require an API key to function. An API key from the Google Cloud Console, supporting both APIs, must be provided.
+
+There are two settings to specify.
+
+[options="header,autowidth",cols="m,^,^,"]
+|===
+|Setting|Type|Default Value|Description
+|jmix.gplace.apiKey|Required||Google API key.
+|jmix.gplace.languageCode|Optional|en|The language in which to return results and for map UI elements and tile labels.
+|===
+
+By default, you can define those settings in `application.properties` file.
+
+Alternatively, implement a Spring bean of type `gr.netmechanics.jmix.gplace.GPlacePropertiesProvider` to provide these settings.
 
 == How to use the add-on
 
@@ -110,7 +121,7 @@ image::./docs/fragment_rating.png[]
 |placeId|Required||The place ID for which to display rating and user reviews.
 |apiKey|Optional|<config>|Google API key. If not specified, the key from the configuration will be used.
 |languageCode|Optional|<config>|Specifies the language for UI elements and map tile labels. If not specified, the key from the configuration will be used.
-|useGoogleIcon|Optional|true|Specifies whether to use the Google icon. If not, the https://developers.google.com/maps/documentation/places/web-service/icons#place-icon-and-background-color-requests[place icon] provided by the Google Places Service will be used.
+|useGoogleIcon|Optional|true|Specifies whether to use the Google icon. If not, the https://developers.google.com/maps/documentation/places/web-service/icons#place-icon-and-background-color-requests[place icon,window=_blank] provided by the Google Places Service will be used.
 |hideReviews|Optional|false|Specifies whether the reviews will be hidden.
 |===
 
@@ -139,7 +150,7 @@ image::./docs/fragment_info.png[]
 |placeId|Required||The place ID for which to display detailed information.
 |apiKey|Optional|<config>|Google API key. If not specified, the key from the configuration will be used.
 |languageCode|Optional|<config>|Specifies the language for map UI elements and tile labels. If not specified, the key from the configuration will be used.
-|useGoogleIcon|Optional|true|Specifies whether to use the Google icon. If not, the https://developers.google.com/maps/documentation/places/web-service/icons#place-icon-and-background-color-requests[place icon] provided by the Google Places Service will be used.
+|useGoogleIcon|Optional|true|Specifies whether to use the Google icon. If not, the https://developers.google.com/maps/documentation/places/web-service/icons#place-icon-and-background-color-requests[place icon,window=_blank] provided by the Google Places Service will be used.
 |hideMap|Optional|false|Specifies whether the map will be hidden.
 |hideOpeningHours|Optional|false|Specifies whether the opening hours information will be hidden.
 |zoom|Optional|14|Initial zoom level of the map.

@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
  */
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "gplace")
+@ConfigurationProperties(prefix = "jmix.gplace")
 public class GPlaceProperties {
 
     private String apiKey;
