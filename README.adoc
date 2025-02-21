@@ -1,6 +1,6 @@
-= Google Place add-on for Jmix
-
 image::https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat[license,link=http://www.apache.org/licenses/LICENSE-2.0,window=_blank,opts=nofollow]
+
+= Google Place add-on for Jmix
 
 This add-on provides:
 
