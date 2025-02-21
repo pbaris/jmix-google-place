@@ -4,7 +4,7 @@
 		<instance id="ratingDc" class="gr.netmechanics.jmix.gplace.data.GooglePlaceRatingRef"/>
 	</data>
 	<content>
-		<vbox id="root" classNames="gprf">
+		<vbox id="root" classNames="gprf" height="100%" expand="gprfReviews">
 			<anchor dataContainer="ratingDc" href="mapUrl" target="BLANK">
 				<hbox width="100%" alignItems="CENTER" expand="gprfRow1">
 					<image id="gprfIcon" resource="icons/glogo.svg" width="44px" height="44px"/>

@@ -37,7 +37,7 @@ public class GooglePlaceRatingFragment extends Fragment<VerticalLayout> {
     @Setter private String apiKey;
     @Setter private String languageCode;
     @Setter private boolean hideReviews;
-    @Setter private boolean useDefaultIcon;
+    @Setter private boolean useDefaultIcon = true;
 
     @ViewComponent private Div gprfRating;
     @ViewComponent private Div gprfRatingStars;

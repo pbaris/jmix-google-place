@@ -1,5 +1,7 @@
 .gprf {
-	border-top: 5px solid #34A853; border-radius: 5px;
+	border: 1px solid #34A853;
+	border-top-width: 5px;
+	border-radius: 5px;
 	background-color: #FFFFFF;
 }
 
@@ -25,7 +27,8 @@
 }
 
 .gprf-review {
-	border-top: 2px solid #EA4335; border-radius: 5px;
+	border-top: 2px solid #EA4335;
+	border-radius: 5px;
 }
 
 .gprf-review .author { font-weight: bold; }

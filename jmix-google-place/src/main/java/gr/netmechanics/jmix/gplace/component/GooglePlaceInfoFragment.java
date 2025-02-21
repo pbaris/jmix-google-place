@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.dependency.StyleSheet;
+import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.IFrame;
 import gr.netmechanics.jmix.gplace.data.GooglePlaceInfoRef;
@@ -37,7 +38,7 @@ public class GooglePlaceInfoFragment extends Fragment<Div> {
     @Setter private String languageCode;
     @Setter private boolean hideMap;
     @Setter private boolean hideOpeningHours;
-    @Setter private boolean useDefaultIcon;
+    @Setter private boolean useDefaultIcon = true;
     @Setter private int zoom = 14;
     @Setter private String mapType = "roadmap";
 
@@ -45,6 +46,7 @@ public class GooglePlaceInfoFragment extends Fragment<Div> {
     @ViewComponent private Div gpifOpeningHours;
     @ViewComponent private JmixButton gpifViewMap;
     @ViewComponent private JmixImage<Object> gpifIcon;
+    @ViewComponent private FormLayout.FormItem gpifOpeningHoursLabel;
     @ViewComponent private InstanceContainer<GooglePlaceInfoRef> infoDc;
 
     private boolean rendered;
@@ -63,7 +65,7 @@ public class GooglePlaceInfoFragment extends Fragment<Div> {
 
             // render Opening Hours
             if (hideOpeningHours) {
-                gpifOpeningHours.setVisible(false);
+                gpifOpeningHoursLabel.setVisible(false);
 
             } else {
                 ref.getOpeningHours().forEach(oh -> gpifOpeningHours.add(new Div(oh)));

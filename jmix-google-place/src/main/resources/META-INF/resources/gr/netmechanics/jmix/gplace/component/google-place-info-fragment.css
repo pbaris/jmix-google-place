@@ -1,16 +1,9 @@
 .gpif {
 	box-sizing: border-box;
-	border-top: 5px solid #4285F4; border-radius: 5px;
+	border: 1px solid #4285F4;
+	border-top-width: 5px;
+	border-radius: 5px;
 	background-color: #FFFFFF;
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(50rem, 1fr));
-	gap: var(--lumo-space-m);
-	width: 100%;
-}
-
-/* Responsive */
-@media only screen and (max-width: 767px) {
-	.gpif {
-		grid-template-columns: auto;
-	}
+	display: flex;
+	flex-wrap: wrap;
 }
