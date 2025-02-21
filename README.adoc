@@ -87,7 +87,9 @@ or through code
 
 ==== Google Place Rating Fragment
 
-A component for showcasing a Google Place’s rating and user reviews.
+A fragment for displaying the rating and user reviews of a Google Place.
+
+image::./docs/fragment_rating.png[]
 
 ===== Usage
 
@@ -114,7 +116,9 @@ A component for showcasing a Google Place’s rating and user reviews.
 
 ==== Google Place Info Fragment
 
-A component for displaying details of a Google Place.
+A fragment for presenting detailed information about a Google Place.
+
+image::./docs/fragment_info.png[]
 
 ===== Usage
 
