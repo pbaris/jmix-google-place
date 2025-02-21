@@ -2,17 +2,15 @@
 
 image::https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat[license,link=http://www.apache.org/licenses/LICENSE-2.0,window=_blank,opts=nofollow]
 
-This add-on provides
+This add-on provides:
 
-* A custom datatype of a Google Place
-* A related field to pick a Google Place
-* Two fragments
-** One to display rating and reviews of a Google Place
-** One to display information about a Google Place
+* A custom data type for representing a Google Place.
+* A related field that allows users to select a Google Place.
+* Two predefined fragments:
+** A fragment for displaying the rating and user reviews of a Google Place.
+** A fragment for presenting detailed information about a Google Place.
 
-image::./docs/preview1.png[]
-image::./docs/preview2.png[]
-image::./docs/preview3.png[]
+image::./docs/preview.png[]
 
 == Installation
 
@@ -31,6 +29,117 @@ For manual installation, add the following dependencies to your `build.gradle`:
 implementation 'gr.netmechanics.jmix:jmix-google-place-starter:<addon-version>'
 ----
 
-== Requirements
+== Configuration
 
 apikey with map embeded and places api
+apikey
+languagecode
+
+== How to use the add-on
+
+=== Datatype
+
+Add-on provides a new datatype `GooglePlaceRef`.
+
+You can define an entity attribute with the `GooglePlaceRef` datatype using Studio.
+
+image::./docs/studio1.png[]
+
+As a result, Studio generates the following attribute definition:
+
+[,java]
+----
+@Column(name = "PLACE")
+private GooglePlaceRef place;
+----
+
+[NOTE]
+====
+The actual value stored in the database is a JSON string.
+
+{"id":"ChIJ______tbmhQR0q7gENr8mSs","displayName":"Heraklion International Airport N. Kazantzakis","address":"Heraklion 716 01, Greece","latitude":35.3395461,"longitude":25.1760645}
+====
+
+=== Field
+
+In a detail view you can add the field from studio `Component Palette` window
+
+image::./docs/studio2.png[]
+
+or through code
+
+[,xml]
+----
+<view xmlns="http://jmix.io/schema/flowui/view"
+        xmlns:nm="http://schemas.netmechanics.gr/jmix/ui"
+        focusComponent="form">
+    ...
+    <layout>
+        <formLayout id="form">
+            <nm:googlePlacePicker id="placeField" property="place"/>
+        </formLayout>
+        ...
+    </layout>
+</view>
+----
+
+=== Fragments
+
+==== Google Place Rating Fragment
+
+A component for showcasing a Google Place’s rating and user reviews.
+
+===== Usage
+
+[,xml]
+----
+<fragment class="gr.netmechanics.jmix.gplace.component.GooglePlaceRatingFragment">
+    <properties>
+        <property name="placeId" value="ChIJbVXA_SNamhQRGtyjFLUFH9E"/>
+    </properties>
+</fragment>
+----
+
+===== Properties
+
+[options="header,autowidth",cols="m,^,^,"]
+|===
+|Property|Required|Default|Description
+|placeId|✓||fff
+|apiKey||<config>|fff
+|languageCode||<config>|fff
+|useGoogleIcon||true|fff
+|hideReviews||false|sss
+|===
+
+==== Google Place Info Fragment
+
+A component for displaying details of a Google Place.
+
+===== Usage
+
+[,xml]
+----
+<fragment class="gr.netmechanics.jmix.gplace.component.GooglePlaceInfoFragment">
+    <properties>
+        <property name="placeId" value="ChIJbVXA_SNamhQRGtyjFLUFH9E"/>
+    </properties>
+</fragment>
+----
+
+===== Properties
+
+[options="header,autowidth",cols="m,^,^,"]
+|===
+|Property|Required|Default|Description
+|placeId|✓||fff
+|apiKey||<config>|fff
+|languageCode||<config>|fff
+|useGoogleIcon||true|sss
+|hideMap||false|sss
+|hideOpeningHours||false|sss
+|zoom||14|sss
+|mapType||roadmap|sss
+|===
+
+== Clear Cache

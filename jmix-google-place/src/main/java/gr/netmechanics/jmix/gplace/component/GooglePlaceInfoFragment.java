@@ -38,7 +38,7 @@ public class GooglePlaceInfoFragment extends Fragment<Div> {
     @Setter private String languageCode;
     @Setter private boolean hideMap;
     @Setter private boolean hideOpeningHours;
-    @Setter private boolean useDefaultIcon = true;
+    @Setter private boolean useGoogleIcon = true;
     @Setter private int zoom = 14;
     @Setter private String mapType = "roadmap";
 
@@ -75,7 +75,7 @@ public class GooglePlaceInfoFragment extends Fragment<Div> {
             Optional.ofNullable(ref.getMapUrl())
                 .ifPresentOrElse(url -> mapUrl = url, () -> gpifViewMap.setVisible(false));
 
-            if (!useDefaultIcon) {
+            if (!useGoogleIcon) {
                 renderIcon(gpifIcon, ref);
             }
 

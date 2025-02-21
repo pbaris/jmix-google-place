@@ -9,8 +9,9 @@
 				<hbox width="100%" alignItems="CENTER" expand="gpifName">
 					<image id="gpifIcon" resource="icons/glogo.svg" width="44px" height="44px"/>
 					<h2 id="gpifName" dataContainer="infoDc" property="displayName"/>
-					<button id="gpifViewMap" css="justify-self:end" icon="vaadin:external-link" themeNames="tertiary-inline icon small"
-							title="msg://gr.netmechanics.jmix.gplace.data/GooglePlaceInfoRef.viewMap"/>
+					<button id="gpifViewMap" css="justify-self:end" alignSelf="START"
+							icon="vaadin:external-link" themeNames="tertiary-inline icon small"
+							title="msg://gr.netmechanics.jmix.gplace.data/GooglePlaceBaseRef.viewMap"/>
 				</hbox>
 
 				<formLayout dataContainer="infoDc" labelsPosition="ASIDE">

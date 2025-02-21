@@ -2,6 +2,7 @@ package gr.netmechanics.jmix.gplace.data;
 
 import java.text.ParseException;
 import java.util.Locale;
+import java.util.Optional;
 
 import gr.netmechanics.jmix.gplace.util.JsonUtil;
 import io.jmix.core.metamodel.annotation.DatatypeDef;
@@ -12,7 +13,7 @@ import org.springframework.lang.NonNull;
 /**
  * @author Panos Bariamis (pbaris)
  */
-@DatatypeDef(id = "googlePlace", javaClass = GooglePlaceRef.class, defaultForClass = true)
+@DatatypeDef(id = "googlePlaceRef", javaClass = GooglePlaceRef.class, defaultForClass = true)
 @Ddl("CLOB")
 public class GooglePlaceRefDatatype implements Datatype<GooglePlaceRef> {
 
@@ -20,7 +21,7 @@ public class GooglePlaceRefDatatype implements Datatype<GooglePlaceRef> {
     @Override
     public String format(final Object value) {
         if (value instanceof GooglePlaceRef gpr) {
-            return JsonUtil.toJson(gpr);
+            return Optional.ofNullable(JsonUtil.toJson(gpr)).orElse("");
         }
 
         return "";

@@ -4,7 +4,9 @@ import static gr.netmechanics.jmix.gplace.util.FragmentRenderUtil.renderIcon;
 import static gr.netmechanics.jmix.gplace.util.FragmentRenderUtil.renderStars;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -15,6 +17,7 @@ import io.jmix.flowui.component.image.JmixImage;
 import io.jmix.flowui.component.virtuallist.JmixVirtualList;
 import io.jmix.flowui.fragment.Fragment;
 import io.jmix.flowui.fragment.FragmentDescriptor;
+import io.jmix.flowui.kit.component.button.JmixButton;
 import io.jmix.flowui.model.InstanceContainer;
 import io.jmix.flowui.view.Subscribe;
 import io.jmix.flowui.view.Target;
@@ -37,15 +40,17 @@ public class GooglePlaceRatingFragment extends Fragment<VerticalLayout> {
     @Setter private String apiKey;
     @Setter private String languageCode;
     @Setter private boolean hideReviews;
-    @Setter private boolean useDefaultIcon = true;
+    @Setter private boolean useGoogleIcon = true;
 
     @ViewComponent private Div gprfRating;
     @ViewComponent private Div gprfRatingStars;
+    @ViewComponent private JmixButton gprfViewMap;
     @ViewComponent private JmixImage<Object> gprfIcon;
     @ViewComponent private JmixVirtualList<GooglePlaceReviewRef> gprfReviews;
     @ViewComponent private InstanceContainer<GooglePlaceRatingRef> ratingDc;
 
     private boolean rendered;
+    private String mapUrl;
 
     @Subscribe(target = Target.HOST_CONTROLLER)
     public void onHostBeforeShow(final View.BeforeShowEvent event) {
@@ -59,9 +64,13 @@ public class GooglePlaceRatingFragment extends Fragment<VerticalLayout> {
             ratingDc.setItem(ref);
             gprfRating.setText("%.1f".formatted(ref.getRating()));
 
-            if (!useDefaultIcon) {
+            if (!useGoogleIcon) {
                 renderIcon(gprfIcon, ref);
             }
+
+            // render View on Map button
+            Optional.ofNullable(ref.getMapUrl())
+                .ifPresentOrElse(url -> mapUrl = url, () -> gprfViewMap.setVisible(false));
 
             renderStars(gprfRatingStars, ref.getRating());
             renderReviews(ref.getReviews());
@@ -79,5 +88,10 @@ public class GooglePlaceRatingFragment extends Fragment<VerticalLayout> {
         } else {
             gprfReviews.setItems(reviews);
         }
+    }
+
+    @Subscribe(id = "gprfViewMap", subject = "clickListener")
+    public void onGprfViewMapClick(final ClickEvent<JmixButton> event) {
+        event.getSource().getUI().ifPresent(ui -> ui.getPage().open(mapUrl, "_blank"));
     }
 }

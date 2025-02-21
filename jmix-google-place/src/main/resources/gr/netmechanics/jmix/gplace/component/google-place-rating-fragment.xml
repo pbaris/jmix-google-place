@@ -4,19 +4,20 @@
 		<instance id="ratingDc" class="gr.netmechanics.jmix.gplace.data.GooglePlaceRatingRef"/>
 	</data>
 	<content>
-		<vbox id="root" classNames="gprf" height="100%" expand="gprfReviews">
-			<anchor dataContainer="ratingDc" href="mapUrl" target="BLANK">
-				<hbox width="100%" alignItems="CENTER" expand="gprfRow1">
-					<image id="gprfIcon" resource="icons/glogo.svg" width="44px" height="44px"/>
-					<vbox id="gprfRow1">
-						<h2 dataContainer="ratingDc" property="displayName"/>
-						<hbox alignItems="CENTER">
-							<div id="gprfRating" classNames="gprf-rating"/>
-							<div id="gprfRatingStars" classNames="gprf-rating-stars"/>
-						</hbox>
-					</vbox>
-				</hbox>
-			</anchor>
+		<vbox id="root" classNames="gprf" height="100%" expand="gprfReviews" minWidth="400px">
+			<hbox width="100%" alignItems="CENTER" expand="gprfRow1">
+				<image id="gprfIcon" resource="icons/glogo.svg" width="44px" height="44px"/>
+				<vbox id="gprfRow1">
+					<h2 dataContainer="ratingDc" property="displayName"/>
+					<hbox alignItems="CENTER">
+						<div id="gprfRating" classNames="gprf-rating"/>
+						<div id="gprfRatingStars" classNames="gprf-rating-stars"/>
+					</hbox>
+				</vbox>
+				<button id="gprfViewMap" css="justify-self:end;" alignSelf="START"
+						icon="vaadin:external-link" themeNames="tertiary-inline icon small"
+						title="msg://gr.netmechanics.jmix.gplace.data/GooglePlaceBaseRef.viewMap"/>
+			</hbox>
 			<virtualList id="gprfReviews">
 				<fragmentRenderer class="gr.netmechanics.jmix.gplace.component.GooglePlaceReviewFragment"/>
 			</virtualList>
