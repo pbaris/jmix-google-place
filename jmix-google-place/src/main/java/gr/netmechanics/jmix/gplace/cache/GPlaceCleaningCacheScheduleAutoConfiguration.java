@@ -20,10 +20,10 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(Job.class)
-@ConditionalOnProperty(name = "gplace.use-default-cleaning-cache-quartz-configuration")
+@ConditionalOnProperty(name = "jmix.gplace.use-default-cleaning-cache-quartz-configuration")
 public class GPlaceCleaningCacheScheduleAutoConfiguration {
 
-    @Value("${gplace.cleaning-cache-cron:0 0 1 1 1/1 ? *}")
+    @Value("${jmix.gplace.cleaning-cache-cron:0 0 1 1 1/1 ? *}")
     private String cron;
 
     @Bean("gplace_GPlaceCleaningCacheJob")
