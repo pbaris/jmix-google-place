@@ -33,7 +33,7 @@ implementation 'gr.netmechanics.jmix:jmix-google-place-starter:<addon-version>'
 
 There are two settings to specify.
 
-[options="header,autowidth",cols="s,^,^,"]
+[options="header,autowidth",cols=",^,^,"]
 |===
 |Setting|Type|Default Value|Description
 |jmix.gplace.apiKey|Required||Google API key.
@@ -120,7 +120,7 @@ image::./docs/fragment_rating.png[]
 
 ===== Properties
 
-[options="header,autowidth",cols="s,^,^,"]
+[options="header,autowidth",cols=",^,^,"]
 |===
 |Property|Type|Default Value|Description
 |placeId|Required||The place ID for which to display rating and user reviews.
@@ -150,7 +150,7 @@ image::./docs/fragment_info.png[]
 
 ===== Properties
 
-[options="header,autowidth",cols="s,,,a"]
+[options="header,autowidth",cols=",,,a"]
 |===
 |Property|Type|Default Value|Description
 |placeId|Required||The place ID for which to display detailed information.
