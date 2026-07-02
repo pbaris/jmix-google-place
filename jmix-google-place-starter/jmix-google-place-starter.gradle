@@ -1,4 +1,6 @@
-archivesBaseName = 'jmix-google-place-starter'
+base {
+    archivesName = 'jmix-google-place-starter'
+}
 
 jmix {
     entitiesEnhancing {

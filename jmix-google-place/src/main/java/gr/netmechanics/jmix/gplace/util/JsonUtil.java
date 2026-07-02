@@ -1,9 +1,9 @@
 package gr.netmechanics.jmix.gplace.util;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.netmechanics.jmix.gplace.data.GooglePlaceRef;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * @author Panos Bariamis (pbaris)
@@ -13,7 +13,7 @@ public class JsonUtil {
 
     public static String toJson(final GooglePlaceRef gpr) {
         try {
-            return new ObjectMapper().writeValueAsString(gpr);
+            return new JsonMapper().writeValueAsString(gpr);
 
         } catch (Exception e) {
             return null;
@@ -22,7 +22,7 @@ public class JsonUtil {
 
     public static GooglePlaceRef fromJson(final String json) {
         try {
-            return  new ObjectMapper().readValue(json, GooglePlaceRef.class);
+            return  new JsonMapper().readValue(json, GooglePlaceRef.class);
 
         } catch (Exception e) {
             return null;
