@@ -6,7 +6,7 @@
 	<content>
 		<vbox id="root" classNames="gprf" height="100%" expand="gprfReviews" minWidth="400px">
 			<hbox width="100%" alignItems="CENTER" expand="gprfRow1">
-				<image id="gprfIcon" resource="icons/glogo.svg" width="44px" height="44px"/>
+				<image id="gprfIcon" resource="glogo.svg" width="44px" height="44px"/>
 				<vbox id="gprfRow1">
 					<h2 dataContainer="ratingDc" property="displayName"/>
 					<hbox alignItems="CENTER">
@@ -15,7 +15,7 @@
 					</hbox>
 				</vbox>
 				<button id="gprfViewMap" css="justify-self:end;" alignSelf="START"
-						icon="vaadin:external-link" themeNames="tertiary-inline icon small"
+						icon="vaadin:external-link" themeNames="tertiary icon small"
 						title="msg://gr.netmechanics.jmix.gplace.data/GooglePlaceBaseRef.viewMap"/>
 			</hbox>
 			<virtualList id="gprfReviews">

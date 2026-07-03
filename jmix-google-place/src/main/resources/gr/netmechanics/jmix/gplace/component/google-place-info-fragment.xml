@@ -7,10 +7,10 @@
 		<div id="root" classNames="gpif" width="100%" height="100%">
 			<vbox spacing="false" width="500px">
 				<hbox width="100%" alignItems="CENTER" expand="gpifName">
-					<image id="gpifIcon" resource="icons/glogo.svg" width="44px" height="44px"/>
+					<image id="gpifIcon" resource="glogo.svg" width="44px" height="44px"/>
 					<h2 id="gpifName" dataContainer="infoDc" property="displayName"/>
 					<button id="gpifViewMap" css="justify-self:end" alignSelf="START"
-							icon="vaadin:external-link" themeNames="tertiary-inline icon small"
+							icon="vaadin:external-link" themeNames="tertiary icon small"
 							title="msg://gr.netmechanics.jmix.gplace.data/GooglePlaceBaseRef.viewMap"/>
 				</hbox>
 

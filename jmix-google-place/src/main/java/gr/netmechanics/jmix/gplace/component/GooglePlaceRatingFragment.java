@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.vaadin.flow.component.ClickEvent;
-import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import gr.netmechanics.jmix.gplace.data.GooglePlaceRatingRef;
@@ -29,7 +28,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * @author Panos Bariamis (pbaris)
  */
-@StyleSheet("gr/netmechanics/jmix/gplace/component/google-place-rating-fragment.css")
 @FragmentDescriptor("google-place-rating-fragment.xml")
 public class GooglePlaceRatingFragment extends Fragment<VerticalLayout> {
 
@@ -64,9 +62,7 @@ public class GooglePlaceRatingFragment extends Fragment<VerticalLayout> {
             ratingDc.setItem(ref);
             gprfRating.setText("%.1f".formatted(ref.getRating()));
 
-            if (!useGoogleIcon) {
-                renderIcon(gprfIcon, ref);
-            }
+            renderIcon(useGoogleIcon, gprfIcon, ref);
 
             // render View on Map button
             Optional.ofNullable(ref.getMapUrl())

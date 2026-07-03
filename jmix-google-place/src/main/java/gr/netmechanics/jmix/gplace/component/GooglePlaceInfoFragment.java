@@ -5,7 +5,6 @@ import static gr.netmechanics.jmix.gplace.util.FragmentRenderUtil.renderIcon;
 import java.util.Optional;
 
 import com.vaadin.flow.component.ClickEvent;
-import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.IFrame;
@@ -26,7 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * @author Panos Bariamis (pbaris)
  */
-@StyleSheet("gr/netmechanics/jmix/gplace/component/google-place-info-fragment.css")
 @FragmentDescriptor("google-place-info-fragment.xml")
 public class GooglePlaceInfoFragment extends Fragment<Div> {
 
@@ -75,9 +73,7 @@ public class GooglePlaceInfoFragment extends Fragment<Div> {
             Optional.ofNullable(ref.getMapUrl())
                 .ifPresentOrElse(url -> mapUrl = url, () -> gpifViewMap.setVisible(false));
 
-            if (!useGoogleIcon) {
-                renderIcon(gpifIcon, ref);
-            }
+            renderIcon(useGoogleIcon, gpifIcon, ref);
 
             renderMap(ref);
             rendered = true;

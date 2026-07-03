@@ -10,21 +10,24 @@ import gr.netmechanics.jmix.gplace.rest.GPlaceService;
 import io.jmix.flowui.component.SupportsItemsFetchCallback;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.lang.NonNull;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Panos Bariamis (pbaris)
  */
+@NullMarked
 @RequiredArgsConstructor
 class GooglePlacePickerFetchCallback implements SupportsItemsFetchCallback.FetchCallback<GooglePlaceRef, String> {
     private final GPlaceService gpService;
     private final String languageCode;
     private final String apiKey;
 
+    @Nullable
     private String searchTerm;
+
     private List<GooglePlaceRef> searchResults = Collections.emptyList();
 
-    @NonNull
     @Override
     public Stream<GooglePlaceRef> fetch(final Query<GooglePlaceRef, String> query) {
         var queryTerm = query.getFilter().orElse(null);

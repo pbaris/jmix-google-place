@@ -9,7 +9,6 @@ import io.jmix.flowui.fragment.FragmentDescriptor;
 import io.jmix.flowui.fragmentrenderer.FragmentRenderer;
 import io.jmix.flowui.fragmentrenderer.RendererItemContainer;
 import io.jmix.flowui.view.ViewComponent;
-import org.springframework.lang.NonNull;
 
 /**
  * @author Panos Bariamis (pbaris)
@@ -24,7 +23,7 @@ public class GooglePlaceReviewFragment extends FragmentRenderer<VerticalLayout, 
     private boolean rendered;
 
     @Override
-    public void setItem(@NonNull final GooglePlaceReviewRef item) {
+    public void setItem(final GooglePlaceReviewRef item) {
         super.setItem(item);
 
         if (!rendered) {
